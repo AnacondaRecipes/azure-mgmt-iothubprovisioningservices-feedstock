@@ -1,0 +1,51 @@
+{% set name = "azure-mgmt-iothubprovisioningservices" %}
+{% set version = "1.1.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.zip
+  sha256: d383a826e7dff772fad86e88a33a661e911a51b1c71c3ea72a590c1d5a09bc9e
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<36]
+
+requirements:
+  host:
+    - setuptools
+    - wheel
+    - python
+    - pip
+  run:
+    - python
+    - msrest >=0.6.21
+    - azure-common >=1.1,<2
+    - azure-mgmt-core >=1.3.0,<2.0.0
+
+tests:
+  imports:
+    - azure.mgmt.iothubprovisioningservices
+    - azure.mgmt.iothubprovisioningservices.aio
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Azure/azure-sdk-for-python
+  summary: Microsoft Azure IoT Hub Provisioning Services Client Library for Python
+  license: MIT
+  license_file: LICENSE
+  license_family: MIT
+  description: |
+    This is the Microsoft Azure IoT Hub Provisioning Services Client Library.
+  doc_url: https://github.com/Azure/azure-sdk-for-python
+  dev_url: https://github.com/Azure/azure-sdk-for-python
+
+extra:
+  recipe-maintainers:
+    - janjagusch
